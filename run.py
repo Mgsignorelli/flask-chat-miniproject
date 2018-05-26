@@ -1,4 +1,5 @@
 import os
+from datetime import datetime
 from flask import Flask, redirect
 
 app = Flask(__name__)
@@ -7,12 +8,14 @@ messages = []
 
 def add_messages(username, message):
     """Add messages to the `messages` list"""
-    messages.append("{}: {}".format(username, message))
+    now = datetime.now().strftime("%H:%M:%S")
+    messages_dict = {"timestamp": now, "from": username, "message": message}
+    messages.append(message_dict)
 
 
 def get_all_messages():
     """Get al of the messages and separate them by a `br`"""
-    return "<br>".join(messages)
+    return messages
 
 
 @app.route('/')
